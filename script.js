@@ -1,49 +1,68 @@
-//Botao de curtidas
-document.addEventListener("DOMContentLoaded", () =>{ 
-    const LikeBtn = document.querySelector(".left-actions .action-btn:first-child");
-    if(!LikeBtn) return;
-    const likeSvg = likeBtn.querySelector("svg");
+// --- 1. LÓGICA DE CURTIR ---
+const botaoCurtir = document.getElementById('botao-curtir');
+const iconeCoracao = document.getElementById('icone-coracao');
+const contadorCurtidas = document.getElementById('contador-curtidas');
+let curtido = false;
+let numeroCurtidas = parseInt(contadorCurtidas.innerText);
 
-   
-    \\localiza o contador
+botaoCurtir.addEventListener('click', function() {
+    if (curtido) {
+        iconeCoracao.style.fill = 'none';
+        iconeCoracao.style.stroke = 'currentColor'; 
+        numeroCurtidas--; 
+        curtido = false;
+    } else {
+        iconeCoracao.style.fill = '#ed4956'; 
+        iconeCoracao.style.stroke = '#ed4956'; 
+        numeroCurtidas++; 
+        curtido = true;
+    }
+    contadorCurtidas.innerText = numeroCurtidas;
+});
 
-    let textNode = Array.from(likeBtn.childNodes).find(node)=> node.nodeType
-    === Node. TEXT_NODE && node.textContent.trim() !==""
-);
+// --- 2. LÓGICA DE COMENTAR ---
+const botaoComentar = document.getElementById('botao-comentar');
+const iconeComentar = document.getElementById('icone-comentar');
 
-//zera o contador
-let cont = 0
+botaoComentar.addEventListener('click', function() {
+    iconeComentar.style.stroke = '#0095f6'; 
+    setTimeout(() => {
+        iconeComentar.style.stroke = 'currentColor'; 
+    }, 300);
+});
 
-//atualiza
-if(textNode){
-    textNode.textContent = `0`;
-}
+// --- 3. LÓGICA DE COMPARTILHAR ---
+const botaoCompartilhar = document.getElementById('botao-compartilhar');
+const iconeCompartilhar = document.getElementById('icone-compartilhar');
+const contadorCompartilhamentos = document.getElementById('contador-compartilhamentos');
+let compartilhado = false;
+let numeroCompartilhamentos = parseInt(contadorCompartilhamentos.innerText);
 
-//coração
-function applyLikedStyle (){
-likeSvg.style.fill = "#ef4444";
-likeSvg.style.stroke = "#ef4444";
-likeSvg.style.color = "#ef4444";
+botaoCompartilhar.addEventListener('click', function() {
+    if (!compartilhado) {
+        iconeCompartilhar.style.stroke = '#0095f6'; 
+        numeroCompartilhamentos++;
+        contadorCompartilhamentos.innerText = numeroCompartilhamentos;
+        compartilhado = true;
+    } else {
+        iconeCompartilhar.style.stroke = 'currentColor'; 
+        numeroCompartilhamentos--;
+        contadorCompartilhamentos.innerText = numeroCompartilhamentos;
+        compartilhado = false;
+    }
+});
 
+// --- 4. LÓGICA DE SALVAR ---
+const botaoSalvar = document.getElementById('botao-salvar');
+const iconeSalvar = document.getElementById('icone-salvar');
+let salvo = false;
 
-//efeito curtida
-likeSvg.style.transform = "scale(1.3)";
-setTimeout(() => (likeSvg.style.transform = "scale(1)")150)
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-})
-
+botaoSalvar.addEventListener('click', function() {
+    if (salvo) {
+        iconeSalvar.style.fill = 'none';
+        salvo = false;
+    } else {
+        iconeSalvar.style.fill = 'currentColor';
+        salvo = true;
+    }
+});
