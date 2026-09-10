@@ -1,68 +1,101 @@
-// --- 1. LÓGICA DE CURTIR ---
-const botaoCurtir = document.getElementById('botao-curtir');
-const iconeCoracao = document.getElementById('icone-coracao');
-const contadorCurtidas = document.getElementById('contador-curtidas');
-let curtido = false;
-let numeroCurtidas = parseInt(contadorCurtidas.innerText);
+document.addEventListener("DOMContentLoaded", () => {
+const likeBtn = document.querySelector(".like-btn");
+const postMedia = document.querySelector(".post-media");
+if (!likeBtn) return;
 
-botaoCurtir.addEventListener('click', function() {
-    if (curtido) {
-        iconeCoracao.style.fill = 'none';
-        iconeCoracao.style.stroke = 'currentColor'; 
-        numeroCurtidas--; 
-        curtido = false;
-    } else {
-        iconeCoracao.style.fill = '#ed4956'; 
-        iconeCoracao.style.stroke = '#ed4956'; 
-        numeroCurtidas++; 
-        curtido = true;
-    }
-    contadorCurtidas.innerText = numeroCurtidas;
+const likesCountSpan = likeBtn.querySelector(".likes-count");
+const bookmarkBtn = document.querySelector(".bookmark-btn");
+
+let isLiked = false;
+let baseLikes = 0; // Inicializa o contador zerado
+
+// Atualiza o texto visual inicial para 0[cite: 1]
+if (likesCountSpan) {
+likesCountSpan.textContent = "0";
+}
+
+// Formata números grandes (ex: 1000 -> 1.0K)[cite: 1]
+function formatLikes(num) {
+if (num >= 1000) {
+return (num / 1000).toFixed(1) + "K";
+}
+return num.toString();
+}
+
+// Função para Incrementar a Curtida
+function addLike() {
+baseLikes++;
+isLiked = true;
+likeBtn.classList.add("liked");
+
+if (likesCountSpan) {
+likesCountSpan.textContent = formatLikes(baseLikes);
+}
+
+// Efeito visual de animação (bounce) no coração[cite: 1]
+const svg = likeBtn.querySelector("svg");
+if (svg) {
+svg.style.transform = "scale(1.4)";
+setTimeout(() => {
+svg.style.transform = "scale(1)";
+}, 150);
+}
+}
+
+// Evento de clique no BOTÃO DE CORAÇÃO (Curte ou Descurte)
+likeBtn.addEventListener("click", (e) => {
+e.stopPropagation();
+
+if (isLiked) {
+// Se já estava curtido, descurte (-1)
+isLiked = false;
+baseLikes = Math.max(0, baseLikes - 1);
+likeBtn.classList.remove("liked");
+if (likesCountSpan) {
+likesCountSpan.textContent = formatLikes(baseLikes);
+}
+} else {
+// Se não estava curtido, adiciona curtida
+addLike();
+}
 });
 
-// --- 2. LÓGICA DE COMENTAR ---
-const botaoComentar = document.getElementById('botao-comentar');
-const iconeComentar = document.getElementById('icone-comentar');
+// Evento de clique na IMAGEM PRINCIPAL (Sempre aumenta likes)
+if (postMedia) {
+postMedia.addEventListener("click", (e) => {
+e.stopPropagation();
+addLike();
+});
+}
 
-botaoComentar.addEventListener('click', function() {
-    iconeComentar.style.stroke = '#0095f6'; 
-    setTimeout(() => {
-        iconeComentar.style.stroke = 'currentColor'; 
-    }, 300);
+// Evento no botão de SALVAR (Bookmark)[cite: 1]
+if (bookmarkBtn) {
+let isBookmarked = false;
+bookmarkBtn.addEventListener("click", (e) => {
+e.stopPropagation();
+isBookmarked = !isBookmarked;
+bookmarkBtn.classList.toggle("bookmarked", isBookmarked);
+
+const svg = bookmarkBtn.querySelector("svg");
+if (svg) {
+svg.style.transform = "scale(1.2)";
+setTimeout(() => {
+svg.style.transform = "scale(1)";
+}, 150);
+}
+});
+}
 });
 
-// --- 3. LÓGICA DE COMPARTILHAR ---
-const botaoCompartilhar = document.getElementById('botao-compartilhar');
-const iconeCompartilhar = document.getElementById('icone-compartilhar');
-const contadorCompartilhamentos = document.getElementById('contador-compartilhamentos');
-let compartilhado = false;
-let numeroCompartilhamentos = parseInt(contadorCompartilhamentos.innerText);
+Postada por GILBERTO NUNES CORDEIRO
+GILBERTO NUNES CORDEIRO
+Criado em: 08:1208:12
+// Função para Incrementar a Curtida
+function addLike() {
+baseLikes++;
+isLiked = true;
+likeBtn.classList.add("liked");
 
-botaoCompartilhar.addEventListener('click', function() {
-    if (!compartilhado) {
-        iconeCompartilhar.style.stroke = '#0095f6'; 
-        numeroCompartilhamentos++;
-        contadorCompartilhamentos.innerText = numeroCompartilhamentos;
-        compartilhado = true;
-    } else {
-        iconeCompartilhar.style.stroke = 'currentColor'; 
-        numeroCompartilhamentos--;
-        contadorCompartilhamentos.innerText = numeroCompartilhamentos;
-        compartilhado = false;
-    }
-});
-
-// --- 4. LÓGICA DE SALVAR ---
-const botaoSalvar = document.getElementById('botao-salvar');
-const iconeSalvar = document.getElementById('icone-salvar');
-let salvo = false;
-
-botaoSalvar.addEventListener('click', function() {
-    if (salvo) {
-        iconeSalvar.style.fill = 'none';
-        salvo = false;
-    } else {
-        iconeSalvar.style.fill = 'currentColor';
-        salvo = true;
-    }
-});
+if (likesCountSpan) {
+likesCountSpan.textContent = formatLikes(baseLikes);
+}
