@@ -191,7 +191,8 @@ body {
 .post-media {
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 5; /* Mantém a proporção vertical padrão do Instagram */
+    aspect-ratio: 4 / 5;
+    /* Mantém a proporção vertical padrão do Instagram */
     background-color: #000;
 }
 
