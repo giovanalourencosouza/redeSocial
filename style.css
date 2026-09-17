@@ -170,3 +170,35 @@ body {
     height: 24px;
     color: #262626;
 }
+
+/* Moldura do celular ajustada para telas menores */
+.phone-frame {
+    width: 100%;
+    max-width: 375px;
+    height: 90vh;
+    max-height: 812px;
+    background-color: #fff;
+    border-radius: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 8px solid #333;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Container da mídia com proporção proporcional de feed */
+.post-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 5; /* Mantém a proporção vertical padrão do Instagram */
+    background-color: #000;
+}
+
+/* Imagem ajustada para preencher todo o espaço sem distorcer */
+.main-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
